@@ -3,3 +3,5 @@ build-web-debug/
 .DS_Store
 *.backup
 *.before-*
+.vercel
+.vercel
