@@ -1,3 +1,5 @@
 build-web/
 build-web-debug/
 .DS_Store
+*.backup
+*.before-*
