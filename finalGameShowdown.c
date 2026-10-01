@@ -210,6 +210,7 @@ int ringcount;
 int frontpressed =0;
 int backpressed =0;
 int jumppressed =0;
+int jumpdownpressed =0;
 
 Vector2 gemposition;
 Vector2 gemposition1= {17*blocksize, 10* blocksize};
@@ -1242,11 +1243,13 @@ int main(){
 
     Vector2 frontpos = {920, 650};
     Vector2 backpos = {760, 650};
-    Vector2 jumppos = {80, 650};
+    Vector2 jumppos = {80, 500};
+    Vector2 jumpdownpos ={80, 650};
 
     Rectangle frontrec = {frontpos.x, frontpos.y, 150,150};
     Rectangle backrec = {backpos.x, backpos.y, 150,150};
     Rectangle jumprec = {jumppos.x, jumppos.y, 150,150};
+    Rectangle jumpdownrec = {jumpdownpos.x, jumpdownpos.y, 150,150};
     
  
     //for explosion effects
@@ -1825,7 +1828,7 @@ int main(){
             onplatform = checkcollision(&position, &speed);
  
             //for movement and jumping
-            if (IsKeyDown(KEY_RIGHT) || frontpressed==2 )
+            if (IsKeyDown(KEY_RIGHT) || frontpressed==2)
                 speed.x = maxspeedx;
             else if (IsKeyDown(KEY_LEFT)|| backpressed ==2)
                 speed.x = -maxspeedx;
@@ -1963,14 +1966,14 @@ int main(){
             bool onring2 = checkHorizontalRingCollision(&position, &speed, ring2left, ring2right);
             bool onring3 = checkVerticalRingCollision(&position, &speed, ring3top, ring3bottom);
  
-            if (IsKeyDown(KEY_RIGHT))
+            if (IsKeyDown(KEY_RIGHT) || frontpressed==2)
                 speed.x = maxspeedx;
-            else if (IsKeyDown(KEY_LEFT))
+            else if (IsKeyDown(KEY_LEFT) || backpressed==2)
                 speed.x = -maxspeedx;
             else
                 speed.x = 0;
  
-            if (IsKeyPressed(KEY_UP) && (onplatform2 || onring1 || onring2 || onring3))
+            if ((IsKeyPressed(KEY_UP) || jumppressed==2) && (onplatform2 || onring1 || onring2 || onring3))
             {
                 speed.y = -jumpspeed;
                 PlaySound(bounce);
@@ -2195,29 +2198,29 @@ int main(){
             // for movement and jumping
             if(tunnel ==1 && large ==1){
  
-                if (IsKeyDown(KEY_RIGHT))
+                if (IsKeyDown(KEY_RIGHT) || frontpressed==2)
                     speed.x = largemaxspeedx;
-                else if (IsKeyDown(KEY_LEFT))
+                else if (IsKeyDown(KEY_LEFT) || backpressed==2)
                     speed.x = -largemaxspeedx;
                 else
                     speed.x = 0;
  
-                if (IsKeyDown(KEY_UP))
+                if (IsKeyDown(KEY_UP) || jumppressed==2)
                     speed.y = -largejumpspeed;
-                else if(IsKeyDown(KEY_DOWN))
+                else if(IsKeyDown(KEY_DOWN) || jumpdownpressed==2)
                     speed.y = largejumpspeed;
                 else
                     speed.y =0;
             }
             else{
-                if (IsKeyDown(KEY_RIGHT))
+                if (IsKeyDown(KEY_RIGHT)|| frontpressed==2)
                     speed.x = level3maxspeedx;
-                else if (IsKeyDown(KEY_LEFT))
+                else if (IsKeyDown(KEY_LEFT)|| backpressed==2)
                     speed.x = -level3maxspeedx;
                 else
                     speed.x = 0;
  
-                if (IsKeyPressed(KEY_UP) && (onplatform3 || onring1_3 || onring2_3 || onring3_3 || onring4_3))
+                if ((IsKeyPressed(KEY_UP)|| jumppressed==2) && (onplatform3 || onring1_3 || onring2_3 || onring3_3 || onring4_3))
                 {
                     speed.y = -jumpspeed;
                     PlaySound(bounce);
@@ -3097,6 +3100,15 @@ int main(){
         }
         else jumppressed = 0;
 
+        DrawTexturePro(jump, (Rectangle){0,0,jump.width, jump.height}, jumpdownrec,(Vector2){0,0}, 180.0f, WHITE);
+       if(CheckCollisionPointRec(GetMousePosition(), jumprec)){
+        jumpdownpressed =1;
+        DrawTexturePro(jumpglowing, (Rectangle){0,0,jumpglowing.width, jumpglowing.height}, jumprec,(Vector2){0,0}, 180.0f, WHITE);
+        if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+                jumpdownpressed =2;
+            }
+        }
+        else jumpdownpressed = 0;
 
  
         // ---------- GAME OVER WINDOW (all levels) ----------
