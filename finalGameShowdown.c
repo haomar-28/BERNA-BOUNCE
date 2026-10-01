@@ -1161,6 +1161,9 @@ int main(){
     Texture2D frontglowing = LoadTexture("assets/frontglowing.png");
     Texture2D jump= LoadTexture("assets/jump.png");
     Texture2D jumpglowing = LoadTexture("assets/jumpglowing.png");
+    Texture2D jumpdown= LoadTexture("assets/jumpdown.png");
+    Texture2D jumpdownglowing = LoadTexture("assets/jumpdownglowing.png");
+
 
 
  
@@ -3100,10 +3103,10 @@ int main(){
         }
         else jumppressed = 0;
 
-        DrawTexturePro(jump, (Rectangle){0,0,jump.width, jump.height}, jumpdownrec,(Vector2){0,0}, 180.0f, WHITE);
-       if(CheckCollisionPointRec(GetMousePosition(), jumprec)){
+        DrawTexturePro(jumpdown, (Rectangle){0,0,jumpdown.width, jumpdown.height}, jumpdownrec,(Vector2){0,0}, 0.0f, WHITE);
+       if(CheckCollisionPointRec(GetMousePosition(), jumpdownrec)){
         jumpdownpressed =1;
-        DrawTexturePro(jumpglowing, (Rectangle){0,0,jumpglowing.width, jumpglowing.height}, jumprec,(Vector2){0,0}, 180.0f, WHITE);
+        DrawTexturePro(jumpdownglowing, (Rectangle){0,0,jumpdownglowing.width, jumpdownglowing.height}, jumpdownrec,(Vector2){0,0}, 0.0f, WHITE);
         if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
                 jumpdownpressed =2;
             }
