@@ -30,6 +30,11 @@ if(EMSCRIPTEN)
     "--shell-file=${CMAKE_SOURCE_DIR}/web/shell.html"
     "--preload-file=${CMAKE_SOURCE_DIR}/assets@assets"
     "-sALLOW_MEMORY_GROWTH=1"
+    "-sINITIAL_MEMORY=67108864"
+    "-sSTACK_SIZE=8388608"
+    "-sSTACK_OVERFLOW_CHECK=2"
+    "-sASYNCIFY=1"
+    "-sASYNCIFY_STACK_SIZE=1048576"
     "-sEXPORTED_RUNTIME_METHODS=HEAPF32"
     "-sNO_EXIT_RUNTIME=1"
   )
