@@ -1,0 +1,8 @@
+BOUNCE CLASSIC web-ready source package
+
+Source: finalGameShowdown.c
+Assets: assets/
+Raylib: dependencies/raylib/
+Web shell: web/shell.html
+Vercel config: vercel.json
+Build script: build-web.sh
