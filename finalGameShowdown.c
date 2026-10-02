@@ -1164,6 +1164,7 @@ int main(){
     Texture2D jumpdown= LoadTexture("assets/jumpdown.png");
     Texture2D jumpdownglowing = LoadTexture("assets/jumpdownglowing.png");
 
+    Texture2D mainmenuarrow = LoadTexture("assets/mainmenuarrow.png");
 
 
  
@@ -1333,12 +1334,19 @@ int main(){
     int gameover = 0;
     Texture2D button= LoadTexture("assets/buttonoriginal.png");
     Texture2D hoveredbutton = LoadTexture("assets/restart hovered.png");
+
  
     float buttonscale = 0.25f;
     float buttonradius= button.height/2 * (buttonscale);
-    Vector2 buttonpos = {500, 520};
+    Vector2 buttonpos = {400, 520};
     Vector2 buttoncenter = {buttonpos.x +buttonradius, buttonpos.y +buttonradius};
+    float mainmenuscale = 0.08f;
+    float mainmenuradius= mainmenuarrow.height/2 * (mainmenuscale);
+    Vector2 mainmenupos = {600, 520};
+    Vector2 mainmenucenter = {mainmenupos.x +buttonradius, mainmenupos.y +buttonradius};
+
     int btnstate =0;
+    int menustate=0;
     bool btnaction;
     Vector2 mousepoint = {0.0f, 0.0f};
  
@@ -2724,6 +2732,13 @@ int main(){
             if(btnstate==2){
                 PlaySound(buttonsound);
             }
+            if(CheckCollisionPointCircle(mousepoint, mainmenucenter, mainmenuradius)){
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) menustate = 2;
+            }
+            else menustate = 0;
+            if(menustate==2){
+                PlaySound(buttonsound);
+            }
  
             score = ringcount*5 +gemcount*10;
             if(scoresaved==0){
@@ -3129,12 +3144,23 @@ int main(){
             {
                 RESET_TO_MENU();
             }
+
+            if(menustate ==2){
+                RESET_TO_MENU();
+                menustate=0;
+            }
  
             DrawTextureEx(button, buttonpos, 0.0f, buttonscale, WHITE);
+            
+ 
+            DrawTextureEx(mainmenuarrow, mainmenupos, 0.0f, mainmenuscale, WHITE);
+
+
  
             if(btnstate == 1)
                 DrawTextureEx(hoveredbutton, buttonpos, 0.0f, buttonscale, WHITE);
  
+            
             DrawText(TextFormat("%d", ringcount), 500, 360, 30, WHITE);
             DrawTextureEx(ringfulltexture, (Vector2){450, 350}, 0.0f, ringsize/2.5, WHITE);
  
