@@ -38,6 +38,14 @@ if(EMSCRIPTEN)
     "-sEXPORTED_RUNTIME_METHODS=HEAPF32"
     "-sNO_EXIT_RUNTIME=1"
   )
+
+  # Cache-bust the generated Emscripten JavaScript loader so browsers cannot
+  # reuse an older JS/WASM combination after a new Web build.
+  add_custom_command(TARGET BounceClassic POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E env python3 -c
+      "from pathlib import Path; p=Path('${CMAKE_SOURCE_DIR}/bin/BounceClassic.html'); s=p.read_text(); old='src=BounceClassic.js'; new='src=BounceClassic.js?v=20261002'; assert old in s, 'BounceClassic.js script tag not found'; p.write_text(s.replace(old,new,1))"
+    VERBATIM
+  )
 endif()
 if(NOT WIN32)
   target_link_libraries(BounceClassic PRIVATE m)
