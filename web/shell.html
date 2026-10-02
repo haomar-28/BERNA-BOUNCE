@@ -25,7 +25,7 @@ canvas.emscripten{display:block;border:0;background:#000;outline:none;max-width:
   <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
 </div>
 <script>
-var Module = {
+var Module = {locateFile:function(p){return p+"?v=20261002"},
   preRun: [], postRun: [],
   print: function(text){ console.log(text); },
   printErr: function(text){ console.error(text); },
